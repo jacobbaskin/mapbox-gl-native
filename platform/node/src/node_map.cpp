@@ -538,7 +538,7 @@ void NodeMap::AddSource(const Nan::FunctionCallbackInfo<v8::Value>& info) {
         return Nan::ThrowTypeError("First argument must be a string");
     }
 
-    Result<std::unique_ptr<Source>> source = convert<std::unique_ptr<Source>>(info[1], *Nan::Utf8String(info[0]));
+    optional<std::unique_ptr<Source>> source = convert<std::unique_ptr<Source>>(info[1], *Nan::Utf8String(info[0]));
     if (!source) {
         Nan::ThrowTypeError(source.error().message.c_str());
         return;
@@ -558,7 +558,7 @@ void NodeMap::AddLayer(const Nan::FunctionCallbackInfo<v8::Value>& info) {
         return Nan::ThrowTypeError("One argument required");
     }
 
-    Result<std::unique_ptr<Layer>> layer = convert<std::unique_ptr<Layer>>(info[0]);
+    optional<std::unique_ptr<Layer>> layer = convert<std::unique_ptr<Layer>>(info[0]);
     if (!layer) {
         Nan::ThrowTypeError(layer.error().message.c_str());
         return;
@@ -774,7 +774,7 @@ void NodeMap::SetFilter(const Nan::FunctionCallbackInfo<v8::Value>& info) {
     Filter filter;
 
     if (!info[1]->IsNull() && !info[1]->IsUndefined()) {
-        Result<Filter> converted = convert<Filter>(info[1]);
+        optional<Filter> converted = convert<Filter>(info[1]);
         if (!converted) {
             Nan::ThrowTypeError(converted.error().message.c_str());
             return;
@@ -908,7 +908,7 @@ void NodeMap::QueryRenderedFeatures(const Nan::FunctionCallbackInfo<v8::Value>& 
         //Check if filter is provided. If set it must be a valid Filter object
         if (Nan::Has(options, Nan::New("filter").ToLocalChecked()).FromJust()) {
             auto filterOption = Nan::Get(options, Nan::New("filter").ToLocalChecked()).ToLocalChecked();
-            Result<Filter> converted = convert<Filter>(filterOption);
+            optional<Filter> converted = convert<Filter>(filterOption);
             if (!converted) {
                 return Nan::ThrowTypeError(converted.error().message.c_str());
             }
@@ -917,14 +917,14 @@ void NodeMap::QueryRenderedFeatures(const Nan::FunctionCallbackInfo<v8::Value>& 
     }
 
     try {
-        std::vector<mbgl::Feature> result;
+        std::vector<mbgl::Feature> optional;
 
         if (Nan::Get(posOrBox, 0).ToLocalChecked()->IsArray()) {
 
             auto pos0 = Nan::Get(posOrBox, 0).ToLocalChecked().As<v8::Array>();
             auto pos1 = Nan::Get(posOrBox, 1).ToLocalChecked().As<v8::Array>();
 
-            result = nodeMap->map->queryRenderedFeatures(mbgl::ScreenBox {
+            optional = nodeMap->map->queryRenderedFeatures(mbgl::ScreenBox {
                 {
                     Nan::Get(pos0, 0).ToLocalChecked()->NumberValue(),
                     Nan::Get(pos0, 1).ToLocalChecked()->NumberValue()
@@ -935,15 +935,15 @@ void NodeMap::QueryRenderedFeatures(const Nan::FunctionCallbackInfo<v8::Value>& 
             },  queryOptions);
 
         } else {
-            result = nodeMap->map->queryRenderedFeatures(mbgl::ScreenCoordinate {
+            optional = nodeMap->map->queryRenderedFeatures(mbgl::ScreenCoordinate {
                 Nan::Get(posOrBox, 0).ToLocalChecked()->NumberValue(),
                 Nan::Get(posOrBox, 1).ToLocalChecked()->NumberValue()
             }, queryOptions);
         }
 
         auto array = Nan::New<v8::Array>();
-        for (unsigned int i = 0; i < result.size(); i++) {
-            array->Set(i, toJS(result[i]));
+        for (unsigned int i = 0; i < optional.size(); i++) {
+            array->Set(i, toJS(optional[i]));
         }
         info.GetReturnValue().Set(array);
     } catch (const std::exception &ex) {

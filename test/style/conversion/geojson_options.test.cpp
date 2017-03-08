@@ -12,14 +12,16 @@ using namespace mbgl::style::conversion;
 TEST(GeoJSONOptions, Basic) {
     ValueMap map;
     Value raw(map);
-    Result<GeoJSONOptions> converted = convert<GeoJSONOptions>(raw);
+    Error error;
+    optional<GeoJSONOptions> converted = convert<GeoJSONOptions>(raw, error);
     ASSERT_TRUE((bool) converted);
 }
 
 TEST(GeoJSONOptions, ErrorHandling) {
     ValueMap map {{"maxzoom", std::string{"should not be a string"}}};
     Value raw(map);
-    Result<GeoJSONOptions> converted = convert<GeoJSONOptions>(raw);
+    Error error;
+    optional<GeoJSONOptions> converted = convert<GeoJSONOptions>(raw, error);
     ASSERT_FALSE((bool) converted);
 }
 

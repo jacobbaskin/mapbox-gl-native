@@ -12,7 +12,7 @@ namespace style {
 
 template <typename T>
 PropertyValue<T> parseProperty(const char* name, const JSValue& value) {
-    conversion::Result<PropertyValue<T>> result = conversion::convert<PropertyValue<T>>(value);
+    optional<PropertyValue<T>> result = conversion::convert<PropertyValue<T>>(value);
     if (!result) {
         Log::Warning(Event::ParseStyle, "%s: %s", name, result.error().message);
         return {};
