@@ -174,27 +174,23 @@ final class Transform implements MapView.OnMapChangedListener {
     return cameraPosition.zoom;
   }
 
-  void zoom(boolean zoomIn) {
-    zoom(zoomIn, -1.0f, -1.0f);
-  }
-
-  void zoom(boolean zoomIn, float x, float y) {
+  void zoom(boolean zoomIn, float focalX, float focalY) {
     // Cancel any animation
     cancelTransitions();
 
     CameraPosition cameraPosition = invalidateCameraPosition();
     if (cameraPosition != null) {
-      zoom(cameraPosition, zoomIn, x, y);
+      int newZoom = (int) Math.round(cameraPosition.zoom + (zoomIn ? 1 : -1));
+      setZoom(newZoom, focalX, focalY, MapboxConstants.ANIMATION_DURATION);
     }
   }
 
-  private void zoom(@NonNull CameraPosition cameraPosition, boolean zoomIn, float x, float y) {
-    int newZoom = (int) Math.round(cameraPosition.zoom + (zoomIn ? 1 : -1));
-    mapView.setZoom(newZoom, x, y, MapboxConstants.ANIMATION_DURATION);
+  void setZoom(double zoom, float focalX, float focalY) {
+    setZoom(zoom, focalX, focalY, 0);
   }
 
-  void setZoom(double zoom) {
-    mapView.setZoom(zoom);
+  void setZoom(double zoom, float focalX, float focalY, long duration) {
+    mapView.setZoom(zoom, focalX, focalY, duration);
   }
 
   // Direction
