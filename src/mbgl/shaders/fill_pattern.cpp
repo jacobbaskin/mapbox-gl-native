@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* fill_pattern::name = "fill_pattern";
+const char* fill_pattern::hash = "bd879cbaef85814e32607929f35f135506af402a";
 const char* fill_pattern::vertexSource = R"MBGL_SHADER(
 uniform mat4 u_matrix;
 uniform vec2 u_pattern_size_a;

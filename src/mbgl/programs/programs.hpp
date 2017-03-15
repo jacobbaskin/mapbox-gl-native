@@ -13,21 +13,23 @@ namespace mbgl {
 
 class Programs {
 public:
-    Programs(gl::Context& context, const ProgramParameters& programParameters)
-        : circle(context, programParameters),
-          fill(context, programParameters),
-          fillPattern(context, programParameters),
-          fillOutline(context, programParameters),
-          fillOutlinePattern(context, programParameters),
-          line(context, programParameters),
-          lineSDF(context, programParameters),
-          linePattern(context, programParameters),
-          raster(context, programParameters),
-          symbolIcon(context, programParameters),
-          symbolIconSDF(context, programParameters),
-          symbolGlyph(context, programParameters),
-          debug(context, ProgramParameters(programParameters.pixelRatio, false)),
-          collisionBox(context, ProgramParameters(programParameters.pixelRatio, false)) {
+    Programs(gl::Context& context,
+             const ProgramParameters& programParameters,
+             const std::string& cacheDir)
+        : circle(context, programParameters, cacheDir),
+          fill(context, programParameters, cacheDir),
+          fillPattern(context, programParameters, cacheDir),
+          fillOutline(context, programParameters, cacheDir),
+          fillOutlinePattern(context, programParameters, cacheDir),
+          line(context, programParameters, cacheDir),
+          lineSDF(context, programParameters, cacheDir),
+          linePattern(context, programParameters, cacheDir),
+          raster(context, programParameters, cacheDir),
+          symbolIcon(context, programParameters, cacheDir),
+          symbolIconSDF(context, programParameters, cacheDir),
+          symbolGlyph(context, programParameters, cacheDir),
+          debug(context, ProgramParameters(programParameters.pixelRatio, false), cacheDir),
+          collisionBox(context, ProgramParameters(programParameters.pixelRatio, false), cacheDir) {
     }
 
     CircleProgram circle;

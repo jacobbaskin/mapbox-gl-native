@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* raster::name = "raster";
+const char* raster::hash = "c79f169af2bb22d64b5025a6098e7b4e06bf7ffe";
 const char* raster::vertexSource = R"MBGL_SHADER(
 uniform mat4 u_matrix;
 uniform vec2 u_tl_parent;

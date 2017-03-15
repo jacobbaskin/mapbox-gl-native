@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* fill::name = "fill";
+const char* fill::hash = "89edb88d856533b127278e5fa328a48aeb7ae4f3";
 const char* fill::vertexSource = R"MBGL_SHADER(
 attribute vec2 a_pos;
 

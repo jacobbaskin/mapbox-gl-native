@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* line_sdf::name = "line_sdf";
+const char* line_sdf::hash = "0e5c3b808291c7511f45c9d1e45c69ba183d1c0b";
 const char* line_sdf::vertexSource = R"MBGL_SHADER(
 // floor(127 / 2) == 63.0
 // the maximum allowed miter limit is 2.0 at the moment. the extrude normal is

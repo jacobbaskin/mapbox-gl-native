@@ -75,6 +75,8 @@ set(MBGL_CORE_FILES
     src/mbgl/gl/object.hpp
     src/mbgl/gl/primitives.hpp
     src/mbgl/gl/program.hpp
+    src/mbgl/gl/program_binary.cpp
+    src/mbgl/gl/program_binary.hpp
     src/mbgl/gl/renderbuffer.hpp
     src/mbgl/gl/segment.cpp
     src/mbgl/gl/segment.hpp
@@ -135,6 +137,8 @@ set(MBGL_CORE_FILES
 
     # programs
     src/mbgl/programs/attributes.hpp
+    src/mbgl/programs/binary_program.cpp
+    src/mbgl/programs/binary_program.hpp
     src/mbgl/programs/circle_program.cpp
     src/mbgl/programs/circle_program.hpp
     src/mbgl/programs/collision_box_program.cpp

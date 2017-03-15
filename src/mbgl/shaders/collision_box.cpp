@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* collision_box::name = "collision_box";
+const char* collision_box::hash = "ef0a4996e6891bc0ef91f12fd1dd8ee0ba551682";
 const char* collision_box::vertexSource = R"MBGL_SHADER(
 attribute vec2 a_pos;
 attribute vec2 a_extrude;

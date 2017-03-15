@@ -2,6 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 
 const inputPath = 'mapbox-gl-js/src/shaders';
 const outputPath = 'src/mbgl/shaders';
@@ -70,9 +71,7 @@ ${fragmentPrelude}
         });
     }
 
-    function vertexSource() {
-        const source = fs.readFileSync(path.join(inputPath, shaderName + '.vertex.glsl'), 'utf8');
-        return applyPragmas(source, {
+    const vertexSource = applyPragmas(fs.readFileSync(path.join(inputPath, shaderName + '.vertex.glsl'), 'utf8'), {
                 define: [
                     "uniform lowp float a_{name}_t;",
                     "attribute {precision} {a_type} a_{name};",
@@ -82,18 +81,21 @@ ${fragmentPrelude}
                     "{name} = unpack_mix_{a_type}(a_{name}, a_{name}_t);"
                 ]
             });
-    }
 
-    function fragmentSource() {
-        const source = fs.readFileSync(path.join(inputPath, shaderName + '.fragment.glsl'), 'utf8');
-        return applyPragmas(source, {
+    const fragmentSource = applyPragmas(fs.readFileSync(path.join(inputPath, shaderName + '.fragment.glsl'), 'utf8'), {
                 define: [
                     "varying {precision} {type} {name};"
                 ],
                 initialize: [
                 ]
             });
-    }
+
+    const shasum = crypto.createHash('sha1');
+    shasum.update(vertexPrelude);
+    shasum.update(vertexSource);
+    shasum.update(fragmentPrelude);
+    shasum.update(fragmentSource);
+    const hash = shasum.digest('hex');
 
     writeIfModified(path.join(outputPath, `${shaderName}.hpp`), `// NOTE: DO NOT CHANGE THIS FILE. IT IS AUTOMATICALLY GENERATED.
 
@@ -105,6 +107,7 @@ namespace shaders {
 class ${shaderName} {
 public:
     static const char* name;
+    static const char* hash;
     static const char* vertexSource;
     static const char* fragmentSource;
 };
@@ -121,11 +124,12 @@ namespace mbgl {
 namespace shaders {
 
 const char* ${shaderName}::name = "${shaderName}";
+const char* ${shaderName}::hash = "${hash}";
 const char* ${shaderName}::vertexSource = R"MBGL_SHADER(
-${vertexSource()}
+${vertexSource}
 )MBGL_SHADER";
 const char* ${shaderName}::fragmentSource = R"MBGL_SHADER(
-${fragmentSource()}
+${fragmentSource}
 )MBGL_SHADER";
 
 } // namespace shaders

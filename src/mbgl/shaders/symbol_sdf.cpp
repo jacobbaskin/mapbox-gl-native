@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* symbol_sdf::name = "symbol_sdf";
+const char* symbol_sdf::hash = "f4c9322eadb16c64a8dc82d790f9c803166833ca";
 const char* symbol_sdf::vertexSource = R"MBGL_SHADER(
 const float PI = 3.141592653589793;
 

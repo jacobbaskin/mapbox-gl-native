@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* circle::name = "circle";
+const char* circle::hash = "fe258b705d5d1bdbbdb70f9db52e148c2f02914c";
 const char* circle::vertexSource = R"MBGL_SHADER(
 uniform mat4 u_matrix;
 uniform bool u_scale_with_map;

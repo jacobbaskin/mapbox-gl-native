@@ -242,13 +242,24 @@ public:
         TypeList<As...>,
         TypeList<optional<typename As::VariableBinding>...>>;
 
+    using NamedLocations = std::array<std::pair<const std::string, AttributeLocation>, sizeof...(As)>;
+
     using Vertex = detail::Vertex<As...>;
 
     template <class A>
     static constexpr std::size_t Index = TypeIndex<A, As...>::value;
 
-    static Locations locations(const ProgramID& id) {
+    static Locations bindLocations(const ProgramID& id) {
         return Locations { bindAttributeLocation(id, Index<As>, As::name())... };
+    }
+
+    template <class Program>
+    static Locations loadNamedLocations(const Program& program) {
+        return Locations{ program.attributeLocation(As::name())... };
+    }
+
+    static NamedLocations getNamedLocations(const Locations& locations) {
+        return NamedLocations{ { { As::name(), locations.template get<As>() }... } };
     }
 
     template <class DrawMode>

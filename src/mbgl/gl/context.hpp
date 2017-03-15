@@ -37,11 +37,16 @@ public:
 
     UniqueShader createShader(ShaderType type, const std::string& source);
     UniqueProgram createProgram(ShaderID vertexShader, ShaderID fragmentShader);
+    UniqueProgram createProgram(BinaryProgramFormat binaryFormat, const std::string& binaryProgram);
+    void verifyProgramLinkage(ProgramID);
     void linkProgram(ProgramID);
     UniqueTexture createTexture();
 
     bool supportsVertexArrays() const;
     UniqueVertexArray createVertexArray();
+
+    bool supportsProgramBinaries() const;
+    optional<std::pair<BinaryProgramFormat, std::string>> getBinaryProgram(ProgramID) const;
 
     template <class Vertex, class DrawMode>
     VertexBuffer<Vertex, DrawMode> createVertexBuffer(VertexVector<Vertex, DrawMode>&& v) {

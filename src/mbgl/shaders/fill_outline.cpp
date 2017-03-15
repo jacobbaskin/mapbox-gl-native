@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* fill_outline::name = "fill_outline";
+const char* fill_outline::hash = "307e66c0d02b376bb5fa99c39cbab0e0bc4167f4";
 const char* fill_outline::vertexSource = R"MBGL_SHADER(
 attribute vec2 a_pos;
 

@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* debug::name = "debug";
+const char* debug::hash = "1a5c1afd97bd1393f19f19e68d533ab451b0e8d3";
 const char* debug::vertexSource = R"MBGL_SHADER(
 attribute vec2 a_pos;
 

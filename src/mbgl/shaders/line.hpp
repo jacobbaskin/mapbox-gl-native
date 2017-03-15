@@ -8,6 +8,7 @@ namespace shaders {
 class line {
 public:
     static const char* name;
+    static const char* hash;
     static const char* vertexSource;
     static const char* fragmentSource;
 };

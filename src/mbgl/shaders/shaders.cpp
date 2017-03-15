@@ -29,5 +29,16 @@ std::string vertexSource(const ProgramParameters& parameters, const char* vertex
     return pixelRatioDefine(parameters) + vertexPrelude + vertexSource;
 }
 
+std::string cacheFilename(const ProgramParameters& parameters, const char* name) {
+    std::ostringstream filename;
+    filename.imbue(std::locale("C"));
+    filename << "shader-" << name << "-" << parameters.pixelRatio;
+    if (parameters.overdraw) {
+        filename << "-overdraw";
+    }
+    filename << ".pbf";
+    return filename.str();
+}
+
 } // namespace shaders
 } // namespace mbgl

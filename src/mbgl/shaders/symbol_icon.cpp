@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* symbol_icon::name = "symbol_icon";
+const char* symbol_icon::hash = "9a07a9a0cd7e0bd2f829d5baf83abbc3b9e36563";
 const char* symbol_icon::vertexSource = R"MBGL_SHADER(
 
 attribute vec4 a_pos_offset;

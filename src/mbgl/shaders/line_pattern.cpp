@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* line_pattern::name = "line_pattern";
+const char* line_pattern::hash = "353459fdafd3db8d96a85da29a2fcff0f9f30538";
 const char* line_pattern::vertexSource = R"MBGL_SHADER(
 // floor(127 / 2) == 63.0
 // the maximum allowed miter limit is 2.0 at the moment. the extrude normal is

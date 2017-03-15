@@ -6,6 +6,7 @@ namespace mbgl {
 namespace shaders {
 
 const char* line::name = "line";
+const char* line::hash = "a86f01220ae584921133ec6107ad590a99ef31cf";
 const char* line::vertexSource = R"MBGL_SHADER(
 
 
